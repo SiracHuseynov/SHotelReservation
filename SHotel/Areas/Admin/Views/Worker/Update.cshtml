@@ -1,0 +1,53 @@
+﻿@using SHotel.Business.DTOs.WorkerDTOs
+@model WorkerUpdateDTO
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="post" asp-controller="Worker" asp-action="Update" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="exampleInputEmail5" class="form-label">FullName</label>  
+                    <input asp-for="FullName" class="form-control" id="exampleInputEmail5">
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail4" class="form-label">Description</label>
+                    <input asp-for="Description" class="form-control" id="exampleInputEmail4">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail2" class="form-label">ImageFile</label>
+                    <input asp-for="ImageFile" class="form-control" id="exampleInputEmail2">
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">FbLink</label>
+                    <input asp-for="FbLink" class="form-control" id="exampleInputEmail1">
+                    <span asp-validation-for="FbLink" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">TwitterLink</label>
+                    <input asp-for="TwitterLink" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="TwitterLink" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">InstagramLink</label>
+                    <input asp-for="InstagramLink" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="InstagramLink" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Position</label>
+                    <select asp-for="PositionId" class="form-control" asp-items="@(new SelectList(ViewBag.Positions,"Id","Name"))"></select>
+                    <span asp-validation-for="PositionId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail6" class="form-label">IsDeleted</label>
+                    <input asp-for="IsDeleted" class="form-control" id="exampleInputEmail6">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>

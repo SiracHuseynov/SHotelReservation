@@ -1,0 +1,239 @@
+﻿@using Microsoft.Extensions.Options
+@using SHotel.Data.DAL
+@model OrderViewModel
+@inject IOptions<StripeSettings> Stripe 
+
+@{
+    decimal? totalAmount = 0;
+    decimal? itemAmount = 0;
+    List<CheckOutViewModel> checkout = ViewBag.CheckOutViewModel;
+}
+
+<!-- SUB BANNER -->
+<section class="section-sub-banner bg-9">
+    <div class="awe-overlay"></div>
+    <div class="sub-banner">
+        <div class="container">
+            <div class="text text-center">
+                <h2>CheckOut</h2>
+                <p>Lorem Ipsum is simply dummy text</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END / SUB BANNER -->
+<!-- BLOG -->
+<section class="section-checkout">
+    <div class="container">
+        <div class="checkout">
+
+            @if(!User.Identity.IsAuthenticated)
+            {
+                <p class="checkout_login">Returning customer? <a asp-action="Login" asp-controller="Account">Click here to login</a></p>
+            }
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="checkout_head">
+                        <h3>BILLING DETAILS</h3>
+                        <span>Lorem Ipsum is simply dummy text</span>
+                    </div>
+
+                    <div class="checkout_form">
+
+                   <form asp-action="Index" method="post" id="orderForm" onchange="this.form.submit()">
+                       <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="row">
+
+                                <div class="col-xs-6 col-sm-6">
+                                    <label>First Name*</label>
+                                    <input asp-for="Name" class="field-text">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6">
+                                    <label>Last Name*</label>
+                                    <input asp-for="Surname" class="field-text">
+                                    <span asp-validation-for="Surname" class="text-danger"></span>
+
+                                </div>
+
+
+                                <div class="col-xs-12 col-sm-12">
+                                    <label>Address*</label>
+                                    <input asp-for="Address" class="field-text" placeholder="Street Address">
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+
+                                </div>
+
+
+
+                                <div class="col-xs-12 col-sm-12">
+                                    <label>Country*</label>
+                                    <input asp-for="Country" class="field-text">
+                                    <span asp-validation-for="Country" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6">
+                                    <label>Email Address*</label>
+                                    <input asp-for="Email" class="field-text">
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6">
+                                    <label>Phone*</label>
+                                    <input asp-for="Phone" class="field-text">
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-xs-6 col-sm-6">
+                                    <label>ZipCode*</label>
+                                    <input asp-for="ZipCode" class="field-text">
+                                    <span asp-validation-for="ZipCode" class="text-danger"></span>
+
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12">
+                                    <label>Order Notes</label>
+                                    <textarea class="field-textarea" asp-for="Note" placeholder="Notes about your order, eg. special notes for delivery"></textarea>
+                                </div>
+
+                                <div style="margin-left: 700px;margin-top:330px;">
+                                    <script src="//checkout.stripe.com/v2/checkout.js"
+                                            class="stripe-button"
+                                            data-key="@Stripe.Value.Publishablekey"
+                                            data-amount="@ViewBag.Total"
+                                            data-name="[Deveducate]"
+                                            data-locale="en"
+                                            data-discription="Sample charge"
+                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                            data-zip-code="true">
+                                    </script>
+                              </div>
+
+                            </div>
+                   </form>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="checkout_head checkout_margin">
+                        <h3>Your payment details</h3>
+                    </div>
+
+                    <div class="checkout_form checkout_margin">
+
+                        <div class="checkout_cart">
+
+                            <!-- ITEM -->
+                            @foreach (var item in checkout)
+                                {
+                                    <div class="cart-item">
+                                        <div class="img">
+                                            <a href="#"><img src="~/uploads/rooms/@item.Room.RoomImages.Where(x => x.IsPoster == true).FirstOrDefault()?.ImageUrl" alt=""></a>
+                                        </div>
+                                        <div class="text">
+                                            <a href="#">@item.Room.Title Room</a>
+
+                                            @if (item.Room.DiscountPercent != null)
+                                            {
+                                                <p><span>@item.DayCount days </span> <b>$ @(itemAmount = ((item.Room.Price - item.Room.Price * item.Room.DiscountPercent / 100) * item.DayCount))</b></p>
+                                                <span hidden @(totalAmount += itemAmount)></span>
+
+                                            }
+                                            else
+                                            {
+                                                <p><span>@item.DayCount days </span> <b>$ @(itemAmount = (item.Room.Price * item.DayCount))</b></p>
+                                                <span hidden @(totalAmount += itemAmount)></span>
+
+                                            }
+
+                                        </div>
+                                        @* <a asp-action="RemoveItem" asp-controller="CheckOut" class="remove"><i class="fa fa-close"></i></a> *@
+
+                                    <a href="#" class="remove" data-roomid="@item.Room.Id"><i class="fa fa-close"></i></a>
+                              
+                                    </div>
+
+                                }
+                            
+                            
+                            <!-- END / ITEM -->
+                          
+
+                        </div>
+
+                        <div class="checkout_cartinfo">
+                            @* <p><span>Cart Subtotal:</span> $1080</p> *@
+                            <p><span>Shipping:</span> Free Shipping</p>
+                            <p><span>Order Total:</span> <span class="color-red">$ @totalAmount</span></p>
+                        </div>
+@* 
+                        <div class="checkout_option">
+                            <ul>
+                                <li>
+                                    <input type="radio" class="radio payment-methor" name="payment">
+                                    <h6>Direct Bank Transfer</h6>
+                                    <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                </li>
+                                <li>
+                                    <input type="radio" class="radio payment-methor" name="payment">
+                                    <h6>Cheque Payment</h6>
+                                </li>
+                                <li>
+                                    <input type="radio" class="radio payment-methor" name="payment">
+                                    <h6>Credit Card</h6>
+                                    <img src="~/images/icon-card.jpg" alt="">
+                                </li>
+                            </ul>
+                         </div>  *@
+
+
+                         <!--Button hissesi-->
+                      @*   <div class="checkout_btn">
+                            <button form="orderForm" type="submit" class="awe-btn awe-btn-13 btn-order">PLACE ORDER</button>
+                        </div> *@
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END / BLOG -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.remove').click(function (e) {
+            e.preventDefault();
+
+            var roomId = $(this).data('roomid');
+            var removeButton = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("RemoveItem", "CheckOut")',
+                data: { roomId: roomId },
+                success: function (response) {
+                    if (response.success) {
+                        removeButton.closest('tr').remove(); // Assuming each item is in a table row
+                    }
+                    else {
+                        window.location.reload(true);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred");
+                }
+            });
+        });
+    });
+</script>

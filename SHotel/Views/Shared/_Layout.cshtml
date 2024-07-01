@@ -1,0 +1,334 @@
+﻿@using SHotel.Business.ViewServices
+@inject LayoutService service
+
+@{
+    var settings = await service.GetSetting();
+    var user = await service.GetUserData();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from landing.engotheme.com/html/lotus/demo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Jun 2024 19:25:08 GMT -->
+
+<head>
+    <meta charset="utf-8">
+    <!-- TITLE -->
+    <title>Index 1</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="~/images/favicon.png" />
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Hind:400,300,500,600%7cMontserrat:400,700" rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS LIBRARY -->
+    <link rel="stylesheet" type="text/css" href="~/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/font-lotusicon.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/settings.css">
+    <link rel="stylesheet" type="text/css" href="~/css/lib/bootstrap-select.min.css">
+
+    <!-- MAIN STYLE -->
+    <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    @RenderSection("addcss",required:false)
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+</head>
+
+<!--[if IE 7]> <body class="ie7 lt-ie8 lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 8]> <body class="ie8 lt-ie9 lt-ie10"> <![endif]-->
+<!--[if IE 9]> <body class="ie9 lt-ie10"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body>
+    <!--<![endif]-->
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <span class="preloader-dot"></span>
+    </div>
+    <!-- END / PRELOADER -->
+    <!-- PAGE WRAP -->
+    <div id="page-wrap">
+
+        <!-- HEADER -->
+        <header id="header">
+
+            <!-- HEADER TOP -->
+            <div class="header_top">
+                <div class="container">
+                    <div class="header_left float-left">
+                        <span><i class="lotus-icon-cloud"></i> 18 °C</span>
+                        <span><i class="lotus-icon-location"></i> @settings.FirstOrDefault(x=> x.Key == "Address").Value</span>
+                        <span><i class="lotus-icon-phone"></i> @settings.FirstOrDefault(x => x.Key == "Phone").Value</span>
+
+                    </div>
+                    <div class="header_right float-right">
+
+                        <span class="login-register">
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <a asp-action="Profile" asp-controller="Account"><i class="fa-solid fa-user"></i> @user.Name</a> 
+                                <a asp-action="LogOut" asp-controller="Account">LogOut</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Login" asp-controller="Account">Login</a>
+                                <a asp-action="Register" asp-controller="Account">Register</a>
+                            }
+                        </span>
+
+                   
+
+                        @* <div class="dropdown currency">
+                            <span>USD <i class="fa fa"></i></span>
+                            <ul>
+                                <li class="active"><a href="#">USD</a></li>
+                                <li><a href="#">EUR</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="dropdown language">
+                            <span>ENG</span>
+
+                            <ul>
+                                <li class="active"><a href="#">ENG</a></li>
+                                <li><a href="#">FR</a></li>
+                            </ul>
+                        </div> *@
+
+                    </div>
+                </div>
+            </div>
+            <!-- END / HEADER TOP -->
+            <!-- HEADER LOGO & MENU -->
+            <div class="header_content" id="header_content">
+
+                <div class="container">
+                    <!-- HEADER LOGO -->
+                    <div class="header_logo">
+                        <a asp-action="Index" asp-controller="Home"><img src="~/images/logo-header.png" alt=""></a>
+                    </div>
+                    <!-- END / HEADER LOGO -->
+                    <!-- HEADER MENU -->
+                    <nav class="header_menu">
+                        <ul class="menu">
+                            <li class="menu-list">
+                                <a asp-action="Index" asp-controller="Home">Home </a>
+                            </li>
+                            <li class="menu-list"><a asp-action="Index" asp-controller="About">About</a></li>
+
+                            <li class="menu-list">
+                                <a asp-action="Index" asp-controller="Room">Room </a>
+                            </li>
+                            <li class="menu-list">
+                                <a asp-action="Index" asp-controller="Restoran">Restaurant</a>
+                            </li>
+                            <li class="menu-list">
+                                <a asp-action="Index" asp-controller="Reservation">Reservation</a>
+                            </li>
+                            <li class="menu-list">
+                                <a asp-action="Events" asp-controller="Event">Page <span class="fa fa-caret-down"></span></a>
+                                <ul class="sub-menu">
+
+                                    <li>
+                                        <a asp-action="Events" asp-controller="Event">Event</a>
+                                      @*   <ul class="sub-menu">
+                                            <li><a asp-action="Events" asp-controller="Event">Events</a></li>
+                                             <li><a asp-action="EventsDetail" asp-controller="Event">Events Detail</a></li> 
+                                        </ul> *@
+                                    </li>
+                                    
+                                    <li><a asp-action="Index" asp-controller="CheckOut">Check Out</a></li>
+                                    <li><a asp-action="Index" asp-controller="ErrorPage">404 Page</a></li> 
+                                    <li><a asp-action="Index" asp-controller="ComingSoon">Comming Soon</a></li>
+                                </ul>
+                            </li>
+                            <li class="menu-list"><a asp-action="Index" asp-controller="Contact">Contact</a></li>
+                            <li class="menu-list" style="    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;">
+                                <form method="post" asp-action="Index" asp-controller="Room" class="form-search" accept-charset="utf-8"> 
+                                    <input type="text" name="search" placeholder="Search" style="border-radius:10px;">
+                                    <span class="btn-search" >
+                                        <button type="submit" class="btn" style="background-color:#e1bd85;"><img src="~/images/icons/search.png" alt=""></button>
+                                    </span>
+                                </form>
+                            
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- END / HEADER MENU -->
+                    <!-- MENU BAR -->
+                    <span class="menu-bars">
+                        <span></span>
+                    </span>
+                    <!-- END / MENU BAR -->
+
+                </div>
+            </div>
+
+        
+            <!-- END / HEADER LOGO & MENU -->
+
+        </header>
+        <!-- END / HEADER -->
+
+
+            @RenderBody()
+
+        <!-- FOOTER -->
+        <footer id="footer">
+
+            <!-- FOOTER TOP -->
+     @*        <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- WIDGET MAILCHIMP -->
+                         <div class="col-lg-9">
+                            <div class="mailchimp">
+                                <h4>News &amp; Offers</h4>
+                                <div class="mailchimp-form">
+                                    <form action="#" method="POST">
+                                        <input type="text" name="email" placeholder="Your email address" class="input-text">
+                                        <button class="awe-btn">SIGN UP</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- END / WIDGET MAILCHIMP -->
+                        <!-- WIDGET SOCIAL -->
+                         <div class="col-lg-3">
+                            <div class="social">
+                                <div class="social-content">
+                                    <a href="@settings.FirstOrDefault(x=> x.Key == "PinterestLink").Value"><i class="fa fa-pinterest"></i></a>
+                                    <a href="@settings.FirstOrDefault(x=> x.Key == "FacebookLink").Value"><i class="fa fa-facebook"></i></a>
+                                    <a href="@settings.FirstOrDefault(x=> x.Key == "XLink").Value"><i class="fa fa-twitter"></i></a>
+                                    <a href="@settings.FirstOrDefault(x=> x.Key == "GoogleLink").Value"><i class="fa fa-google-plus"></i></a>
+                                    <a href="@settings.FirstOrDefault(x=> x.Key == "InstagramLink").Value"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div> 
+                        <!-- END / WIDGET SOCIAL -->
+
+                    </div>
+                </div>
+            </div> *@
+            <!-- END / FOOTER TOP -->
+            <!-- FOOTER CENTER -->
+            <div class="footer_center">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-xs-12 col-lg-5">
+                            <div class="widget widget_logo">
+                                <div class="widget-logo">
+                                    <div class="img">
+                                        <a asp-action="Index" asp-controller="Home"><img src="~/images/logo-footer.png" alt=""></a>
+                                    </div>
+                                    <div class="text">
+                                        <p><i class="lotus-icon-location"></i> @settings.FirstOrDefault(x => x.Key == "Address").Value</p>
+                                        <p><i class="lotus-icon-phone"></i> @settings.FirstOrDefault(x => x.Key == "Phone").Value</p>
+                                        <p><i class="fa fa-envelope-o"></i> @settings.FirstOrDefault(x => x.Key == "Email").Value</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-lg-2">
+                            <div class="widget">
+                                <h4 class="widget-title">Page site</h4>
+                                <ul>
+                                    <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                                    <li><a asp-action="Index" asp-controller="Room">Room</a></li>  
+                                    <li><a asp-action="Index" asp-controller="Restoran">Restaurant</a></li>
+                                    <li><a asp-action="Events" asp-controller="Event">Event</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-lg-2">
+                            <div class="widget">
+                                <h4 class="widget-title">ABOUT</h4>
+                                <ul>
+                                    <li><a asp-action="Index" asp-controller="About">About</a></li>
+                                    <li><a asp-action="Events" asp-controller="Event">Event</a></li>
+                                    <li><a asp-action="Index" asp-controller="Contact">Contact Us</a></li>
+                                    <li><a asp-action="Index" asp-controller="ComingSoon">Comming Soon</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-4 col-lg-3">
+                            <div class="widget widget_tripadvisor">
+                                <h4 class="widget-title">Tripadvisor</h4>
+                                <div class="tripadvisor">
+                                    <p>Now with hotel reviews by</p>
+                                    <img src="~/images/tripadvisor.png" alt="">
+                                    <span class="tripadvisor-circle">
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i></i>
+                                        <i class="part"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- END / FOOTER CENTER -->
+            <!-- FOOTER BOTTOM -->
+            <div class="footer_bottom">
+                <div class="container">
+                    <p>&copy; 2024 SHotel All rights reserved.</p> 
+                </div>
+            </div>
+            <!-- END / FOOTER BOTTOM -->
+
+        </footer>
+        <!-- END / FOOTER -->
+
+    </div>
+    <!-- END / PAGE WRAP -->
+    <!-- LOAD JQUERY -->
+    @* <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> *@
+    <script type="text/javascript" src="~/js/lib/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/bootstrap-select.js"></script>
+    @* <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;signed_in=true"></script> *@
+    <script type="text/javascript" src="~/js/lib/isotope.pkgd.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/owl.carousel.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.appear.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.countTo.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.countdown.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.parallax-1.1.3.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/SmoothScroll.js"></script>
+    <!-- validate -->
+    <script type="text/javascript" src="~/js/lib/jquery.form.min.js"></script>
+    <script type="text/javascript" src="~/js/lib/jquery.validate.min.js"></script>
+    <!-- Custom jQuery -->
+    <script type="text/javascript" src="~/js/scripts.js"></script>
+    <script type="text/javascript" src="~/js/myscript.js"></script>
+    <script type="text/javascript" src="~/js/basket.js"></script>
+    <script type="text/javascript" src="~/js/loadmore.js"></script>
+</body>
+
+<!-- Mirrored from landing.engotheme.com/html/lotus/demo/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 08 Jun 2024 19:25:56 GMT -->
+</html>
+

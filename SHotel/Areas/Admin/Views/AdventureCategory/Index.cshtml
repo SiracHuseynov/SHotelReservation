@@ -1,0 +1,51 @@
+﻿@using SHotel.Business.DTOs.AdventureCategoryDTOs
+@model List<AdventureCategoryGetDTO>
+
+
+@{
+    int counter = 1;
+}
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-3">
+            <a  asp-action="Create" asp-controller="AdventureCategory" class="btn btn-primary">Create AdventureCategory</a>
+            <a asp-action="Archive" asp-controller="AdventureCategory" class="btn btn-secondary mt-3">Archive</a>
+        </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">IsDeleted</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@(counter++)</th>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.IsDeleted</td>
+                            <td>
+                                    <a asp-action="Update" asp-controller="AdventureCategory" class="btn btn-warning" asp-route-id="@item.Id">Update</a>
+                                    <a asp-action="Delete" asp-controller="AdventureCategory" class="btn btn-danger btn-delete" asp-route-id="@item.Id">Delete</a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        
+
+
+        </div>
+    </div>
+</div>
+

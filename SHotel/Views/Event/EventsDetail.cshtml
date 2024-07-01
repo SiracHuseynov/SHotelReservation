@@ -1,0 +1,256 @@
+﻿@using SHotel.Business.ViewServices
+@inject LayoutService service
+
+@{
+    var settings = await service.GetSetting();
+}
+
+@model EventViewModel
+
+<!-- SUB BANNER -->
+<section class="section-sub-banner bg-2">
+    <div class="sub-banner">
+        <div class="container">
+            <div class="text text-center">
+                <h2>Our BLOG</h2>
+                <p>Lorem Ipsum is simply dummy text</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- END / SUB BANNER -->
+<!-- BLOG -->
+<section class="section-blog bg-white">
+    <div class="container">
+        <div class="blog">
+            <div class="row">
+
+                <div class="col-md-8 col-md-push-4">
+                    <div class="blog-content">
+                        <h1 class="element-invisible">Event detail</h1>
+                        <!-- POST SINGLE -->
+                        <article class="post post-single">
+
+                            <div class="entry-media">
+                                <img src="~/uploads/adventures/@Model.Adventure?.ImageUrl" alt="">
+                                <span class="posted-on"><strong>@Model.Adventure?.StartDate.Day</strong>@Model.Adventure?.StartDate.ToString("MMM")</span>
+
+                                <div class="count-date" data-end="@Model.Adventure?.StartDate"></div>
+
+                            </div>
+
+                            <div class="entry-header">
+
+                                <h2 class="entry-title">@Model.Adventure.Name</h2>
+
+                                <p class="entry-meta">
+
+                                    <span class="posted-on">
+                                        <span class="screen-reader-text">Posted on</span>
+                                        <span class="entry-time">JUN 23, 2014</span>
+                                    </span>
+
+                                    <span class="entry-author">
+                                        <span class="screen-reader-text">Posted by </span>
+                                        <a asp-action="Index" asp-controller="About" class="entry-author-link">
+                                            <span class="entry-author-name">SHotel Owners</span>
+                                        </a>
+                                    </span>
+
+                                    <span class="entry-categories">
+                                        <a asp-action="Events" asp-controller="Event" asp-route-categoryId="@Model.Adventure.AdventureCategoryId">@Model.Adventure.AdventureCategory.Name</a>
+                                    </span>
+
+                                 @*    <span class="entry-comments-link">
+                                        <a href="#">3 Comments</a>
+                                    </span> *@
+                                </p>
+
+                            </div>
+
+                            <div class="entry-content">
+                               
+
+                                <p>@Model.Adventure.Description</p>
+
+                                <br>
+                                
+                                 <blockquote>
+                                <p>@Model.Adventure.Blocktext</p>
+                                </blockquote> 
+
+
+
+                            </div>
+
+
+                        </article>
+                        <!-- END / POST SINGLE -->
+                        <!-- COMMENT -->
+             @*            <div id="comments">
+                            <h4 class="comment-title">COMMENT (3)</h4>
+
+                            <ul class="commentlist">
+                              
+                                    <li>
+                                        <div class="comment-body">
+
+                                             <a class="comment-avatar"><img src="~/images/avatar/img-1.jpg" alt=""></a> 
+
+                                            <h4 class="comment-subject">item.Subject</h4>
+                                            <p>item.Content</p>
+
+                                            <span class="comment-meta">
+                                                <a href="#">item.User.Name</a> - 20PM 15 Oct 2015
+                                            </span>
+
+                                            <div class="action">
+                                                <a href="#" class="awe-btn awe-btn-14">Edit</a>
+                                                <a href="#" class="awe-btn awe-btn-14">Reply</a>
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+                                
+                            </ul>
+                        </div> *@
+                        <!-- END / COMMENT -->
+                        <!-- COMMENT RESPOND -->
+               @*          <div class="comment-respond">
+                            <h3 class="comment-reply-title">LEAVE A COMMENT</h3>
+                            <form method="post" class="comment-form">
+                                <div class="row">
+                                    @if(!User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="col-sm-6">
+                                            <input type="text" class="field-text" placeholder="FullName">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="field-text" placeholder="Email">
+                                        </div>
+                                    }
+                                    <div class="col-sm-12">
+                                        <input type="text" class="field-text" placeholder="Subject">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <textarea placeholder="Your comment" type="text" class="field-textarea"></textarea>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="awe-btn awe-btn-14">SUBMIT COMMENT</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> *@
+                        <!-- END COMMENT RESPOND -->
+
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-md-pull-8">
+                    <div class="sidebar">
+
+                        <!-- WIDGET CATEGORIES -->
+                        <div class="widget widget_categories">
+                            <h4 class="widget-title">CATEGORIES</h4>
+                            <ul>
+                                <li><a asp-action="Events" asp-controller="Event">All </a></li>
+                                @foreach (var category in Model.AdventureCategories)
+                                {
+                                    <li><a asp-action ="Events" asp-controller="Event" asp-route-categoryId="@category.Id">@category.Name </a></li>
+                                }
+                            </ul>
+                        </div>
+                        <!-- END / WIDGET CATEGORIES -->
+                        <!-- UPCOMING EVENTS -->
+                        <div class="widget widget_upcoming_events">
+                            <h4 class="widget-title">Upcoming Events</h4>
+                            <ul>
+                                @foreach (var item in Model.Adventures)
+                                {
+                                    if (item.StartDate >= DateTime.Now)
+                                    {
+                                        <li>
+                                            <span class="event-date">
+                                                <strong>@item.StartDate.Day</strong>
+                                                @item.StartDate.ToString("MMM")
+                                            </span>
+                                            <div class="text">
+                                                <a asp-action="EventsDetail" asp-controller="Event" asp-route-id="@item.Id">@item.Name</a>
+                                                <span class="date">@item.StartDate</span>
+                                            </div>
+                                        </li>
+                                    }
+
+                                }
+                            </ul>
+                        </div>
+                        <!-- END / UPCOMING EVENTS -->
+                        <!-- WIDGET DEAL -->
+                        <div class="widget widget_deal">
+                            <h4 class="widget-title">DEAL</h4>
+                            <div class="widget-deal owl-single">
+
+                                <!-- ITEM -->
+                                <div class="item">
+                                    <div class="img">
+                                        <img src="~/images/hotel/img-1.jpg" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <h2>Luxury ROOM FORM</h2>
+                                        <p class="price">$320</p>
+                                        <a asp-action="Index" asp-controller="Room" class="awe-btn awe-btn-12">VIEW MORE</a>
+                                    </div>
+                                </div>
+                                <!-- END / ITEM -->
+                                <!-- ITEM -->
+                                <div class="item">
+                                    <div class="img">
+                                        <img src="~/images/hotel/img-1.jpg" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <h2>Luxury ROOM FORM</h2>
+                                        <p class="price">$320</p>
+                                        <a asp-action="Index" asp-controller="Room" class="awe-btn awe-btn-12">VIEW MORE</a>
+                                    </div>
+                                </div>
+                                <!-- END / ITEM -->
+                                <!-- ITEM -->
+                                <div class="item">
+                                    <div class="img">
+                                        <img src="~/images/hotel/img-1.jpg" alt="">
+                                    </div>
+                                    <div class="text">
+                                        <h2>Luxury ROOM FORM</h2>
+                                        <p class="price">$320</p>
+                                        <aasp-action ="Index" asp-controller="Room" class="awe-btn awe-btn-12">VIEW MORE</a>
+                                    </div>
+                                </div>
+                                <!-- END / ITEM -->
+
+                            </div>
+                        </div>
+                        <!-- END / WIDGET DEAL -->
+                        <!-- WIDGET SOCIAL -->
+                        <div class="widget widget_social">
+                            <h4 class="widget-title">SHotel SOCIALS</h4>
+                            <div class="widget-social">
+                                <a href="@settings.FirstOrDefault(x=> x.Key == "PinterestLink").Value"><i class="fa fa-pinterest"></i></a>
+                                <a href="@settings.FirstOrDefault(x=> x.Key == "FacebookLink").Value"> <i class="fa fa-facebook"></i></a>
+                                <a href="@settings.FirstOrDefault(x=> x.Key == "XLink").Value"> <i class="fa fa-twitter"></i></a>
+                                <a href="@settings.FirstOrDefault(x=> x.Key == "GoogleLink").Value"> <i class="fa fa-google-plus"></i></a>
+                                <a href="@settings.FirstOrDefault(x=> x.Key == "InstagramLink").Value"><i class="fa fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <!-- END / WIDGET SOCIAL -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END / BLOG -->

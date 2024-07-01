@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model List<IdentityRole>
+@{
+    int counter = 1;
+}
+
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-3">
+            <a asp-action="Create" asp-controller="Role" class="btn btn-primary">Create Role</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@(counter++)</th>
+                            <td>@item.Name</td>
+                            <td> 
+                                <a asp-action="Delete" asp-controller="Role" class="btn btn-danger btn-delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+      
+        </div>
+    </div>
+</div>

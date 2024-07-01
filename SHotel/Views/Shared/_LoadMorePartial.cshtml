@@ -1,0 +1,52 @@
+﻿@using SHotel.Business.DTOs.RoomDTOs
+@model List<RoomGetDTO>
+
+<div class="col-md-12">
+    <div class="accomd-modations-content owl-single">
+
+        <div class="row" >
+
+            @foreach (var item in Model)
+            {
+
+                <!-- ITEM -->
+                <div class="col-xs-4">
+                    <div class="accomd-modations-room">
+                        <div class="img">
+                            <a asp-action="RoomDetail" asp-route-id="@item.Id" asp-controller="Room"><img src="~/uploads/rooms/@item.RoomImages.Where(x=> x.IsPoster == true).FirstOrDefault()?.ImageUrl" alt=""></a>
+                        </div>
+                        <div class="text">
+                            <h2><a asp-action="RoomDetail" asp-route-id="@item.Id" asp-controller="Room">@item.Title Room</a></h2>
+
+                            @if (item.DiscountPercent != null)
+                            {
+                                <p class="price">
+                                    <span class="price"> <span class="amout"> <small><del>$@item.Price</del></small> $@(item.Price - item.Price * item.DiscountPercent / 100) </span> /days</span>
+                                </p>
+
+                            }
+                            else
+                            {
+                                <p class="price">
+                                    <span class="price"> <span class="amout">$@item.Price </span> /days</span>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END / ITEM -->
+            }
+
+
+        </div>
+
+
+
+
+
+    </div>
+
+</div>
+
+}

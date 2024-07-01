@@ -1,0 +1,73 @@
+﻿@using SHotel.Business.DTOs.RoomDTOs
+@model RoomCreateDTO
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="post" asp-controller="Room" asp-action="Create" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="exampleInputEmail5" class="form-label">Title</label>
+                    <input asp-for="Title" class="form-control" id="exampleInputEmail5">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail4" class="form-label">Description</label>
+                    <input asp-for="Description" class="form-control" id="exampleInputEmail4">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail2" class="form-label">Price</label>
+                    <input asp-for="Price" class="form-control" id="exampleInputEmail2">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Size</label>
+                    <input asp-for="Size" class="form-control" id="exampleInputEmail1">
+                    <span asp-validation-for="Size" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">PersonCount</label>
+                    <input asp-for="PersonCount" max="4" min="1" class="form-control" id="exampleInputEmail1">
+                    <span asp-validation-for="PersonCount" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">DiscountPercent</label>
+                    <input asp-for="DiscountPercent" class="form-control" id="exampleInputEmail1">
+                    <span asp-validation-for="DiscountPercent" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">View</label>
+                    <input asp-for="View" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="View" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">IsAvailable</label>
+                    <input asp-for="IsAvailable" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="IsAvailable" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">BedId</label>
+                    <select asp-for="BedId" class="form-control" asp-items="@(new SelectList(ViewBag.Beds,"Id","Name"))"></select>
+                    <span asp-validation-for="BedId" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">RoomPosterImageFile</label>
+                    <input asp-for="RoomPosterImageFile" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="RoomPosterImageFile" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail3" class="form-label">RoomDetailImageFiles</label>  
+                    <input asp-for="RoomDetailImageFiles" class="form-control" id="exampleInputEmail3">
+                    <span asp-validation-for="RoomDetailImageFiles" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail6" class="form-label">IsDeleted</label>
+                    <input asp-for="IsDeleted" class="form-control" id="exampleInputEmail6">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>

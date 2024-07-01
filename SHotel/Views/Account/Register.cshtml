@@ -1,0 +1,77 @@
+﻿@model MemberRegisterVm
+
+ <!-- ACCOUNT -->
+<section class="section-account parallax bg-11">
+    <div class="awe-overlay"></div>
+    <div class="container">
+        <div class="login-register">
+            <div class="text text-center">
+                <h2>REGISTER FORM</h2>
+                <p>If you no have account in lotus Hotel! Register and feeling</p>
+                <form asp-controller="Account" asp-action="Register" method="post" class="account_form">
+                    <div asp-validation-summary="ModelOnly" style="color:white;"></div>
+                    <div class="field-form"> 
+                        <input asp-for="Name" class="field-text" placeholder="Name*">
+                        <span asp-validation-for="Name"  style="color:white;"></span>
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="Surname" class="field-text" placeholder="Surname*">
+                        <span asp-validation-for="Surname" style="color:white;"></span>
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="Username" class="field-text" placeholder="Username*">
+                        <span asp-validation-for="Username" style="color:white;"></span>
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="Email" class="field-text" placeholder="Email*">
+                        <span asp-validation-for="Email" style="color:white;"></span>
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="Password" class="field-text" placeholder="Password" id="password">
+                        <span asp-validation-for="Password" style="color:white;"></span>
+                        <span class="view-pass" id="togglePassword"><i class="lotus-icon-view"></i></span>
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="ConfirmPassword" class="field-text" placeholder="ConfirmPassword" id="ConfirmPassword">
+                        <span asp-validation-for="ConfirmPassword" style="color:white;"></span>
+                        <span class="view-pass" id="toggleConfirmPassword"><i class="lotus-icon-view"></i></span>
+                    </div>
+                    <div class="field-form field-submit">
+                        <button type="submit" class="awe-btn awe-btn-13">REGISTER</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END / ACCOUNT -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#toggleConfirmPassword');
+        const password = document.querySelector('#ConfirmPassword');
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'ConfirmPassword' ? 'text' : 'ConfirmPassword';
+            password.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>

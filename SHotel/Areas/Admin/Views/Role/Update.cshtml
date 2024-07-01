@@ -1,0 +1,19 @@
+﻿@using SHotel.ViewModels
+@model AdminRoleViewModel
+
+<div class="container">
+    <div class="row">
+        <h1>@Model.User.UserName</h1>
+        <form method="post" asp-action="Update" asp-controller="Role">
+            <input type="hidden" name="id" value="@Model.User.Id" />
+            @foreach (var role in Model.Roles)
+            {
+                <input type="checkbox"
+                       value="@role.Name"
+                       name="roles"
+                @(Model.UserRoles.Any(userRole => userRole == role.Name) ? "checked" : "") /> @role.Name <br />
+            }
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>

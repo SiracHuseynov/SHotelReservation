@@ -1,0 +1,115 @@
+﻿@using SHotel.Business.ViewServices
+@model AboutViewModel 
+
+@inject LayoutService service
+
+@{
+    var settings = await service.GetSetting();
+}
+
+<!-- SUB BANNER -->
+<section class="section-sub-banner bg-9">
+    <div class="awe-overlay"></div>
+    <div class="sub-banner">
+        <div class="container">
+            <div class="text text-center">
+                <h2>ABOUT lotus</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- END / SUB BANNER -->
+<!-- ABOUT -->
+<section class="section-about">
+    <div class="container">
+
+        <div class="about">
+
+            <!-- ITEM -->
+            <div class="about-item">
+
+                <div class="img owl-single">
+                    <img src="~/images/about/img-1.jpg" alt="">
+                    <img src="~/images/about/img-2.jpg" alt="">
+                </div>
+
+                <div class="text">
+                    <h2 class="heading">ABOUT lotus</h2>
+                    <div class="desc">
+                        <p>@settings.FirstOrDefault(x => x.Key == "About").Value</p><br>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END / ITEM -->
+            <!-- ITEM -->
+            <div class="about-item about-right">
+
+                <div class="img">
+                    <img src="~/images/about/img-2.jpg" alt="">
+                </div>
+
+                <div class="text">
+                    <h2 class="heading">WHY GUEST CHOOSE lotus HOTEL?</h2>
+                    <div class="desc">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, <b>sometimes by accident, sometimes on purpose</b> (injected humour and the like).</p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END / ITEM -->
+
+        </div>
+
+    </div>
+</section>
+<!-- END / ABOUT -->
+<!-- TEAM -->
+<section class="section-team">
+    <div class="container">
+
+        <div class="team">
+            <h2 class="heading text-center">Team Member</h2>
+            <p class="sub-heading text-center">Lorem Ipsum is simply dummy text of the printing</p>
+
+            <div class="team_content">
+                <div class="row">
+
+                    <!-- ITEM -->
+                    @foreach(var item in Model.Workers)
+                    {
+
+                        <div class="col-xs-6 col-md-3">
+                            <div class="team_item text-center">
+
+                                <div class="img">
+                                    <a href="@item.InstagramLink"><img src="~/uploads/workers/@item.ImageUrl" alt=""></a>
+                                </div>
+
+                                <div class="text">
+                                    <h2>@item.FullName</h2>
+                                    <span>@item.Position.Name of SHotel</span>
+                                    <p>@item.Description</p>
+                                    <div class="team-share">
+                                        <a href="@item.FbLink"><i class="fa fa-facebook"></i></a>
+                                        <a href="@item.TwitterLink"><i class="fa fa-twitter"></i></a>
+                                        <a href="@item.InstagramLink"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    <!-- END / ITEM -->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- END / TEAM -->

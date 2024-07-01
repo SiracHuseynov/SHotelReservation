@@ -1,0 +1,70 @@
+﻿@using SHotel.Business.DTOs.WorkerDTOs
+@using SHotel.Business.Extensions
+@using SHotel.Core.Models
+@model PaginatedList<Worker>
+
+@{
+    int counter = 1;
+}
+
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-3">
+            <a asp-action="Index" asp-controller="Worker" class="btn btn-info">Index</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Id</th>
+                        <th scope="col">FullName</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">ImageUrl</th>
+                        <th scope="col">IsDeleted</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@(counter++)</th>
+                            <td>@item.Id</td>
+                            <td>@item.FullName</td>
+                            <td>@item.Description</td>
+                            <td><img src="~/uploads/workers/@item.ImageUrl" height="100" /></td>
+                            <td>@item.IsDeleted</td>
+                            <td>
+                                <a asp-action="Update" asp-controller="Worker" class="btn btn-warning" asp-route-id="@item.Id">Update</a>
+                                <a asp-action="Delete" asp-controller="Worker" class="btn btn-danger btn-delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item @(Model.HasPrev == true ? "" : "disabled")">
+                        <a class="page-link" asp-action="Archive" asp-route-page="@(Model.ActivePage - 1)" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+
+
+                    @for (int i = 1; i <= Model.TotalPageCount; i++)
+                    {
+                        <li class="page-item @(Model.ActivePage == i ? "active" : "")"><a class="page-link" asp-action="Archive" asp-route-page="@i">@i</a></li>
+                    }
+
+                    <li class="page-item  @(Model.HasNext == true ? "" : "disabled")">
+                        <a class="page-link" asp-action="Archive" asp-route-page="@(Model.ActivePage + 1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+</div>

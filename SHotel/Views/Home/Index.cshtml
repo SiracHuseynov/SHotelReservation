@@ -1,0 +1,224 @@
+﻿@using SHotel.Business.ViewServices
+@model HomeViewModel
+
+@inject LayoutService service
+
+@{
+    var settings = await service.GetSetting();
+    int counter = 0;
+    int length = Model.Rooms.Count;
+    double count;
+}
+
+<!-- BANNER SLIDER -->
+<section class="section-slider">
+    <h1 class="element-invisible">Slider</h1>
+    <div id="slider-revolution">
+        <ul>
+            @foreach (var item in Model.Sliders)
+            {
+                <li data-transition="fade">
+                    <img src="~/uploads/sliders/@item.ImageUrl" data-bgposition="left center" data-duration="14000" data-bgpositionend="right center" alt="">
+
+                    <div class="tp-caption sft fadeout slider-caption-sub slider-caption-1" data-x="center" data-y="100" data-speed="700" data-start="1500" data-easing="easeOutBack">
+                        @Html.Raw(@item.Icon)
+                    </div>
+
+                    <div class="tp-caption sft fadeout slider-caption-sub slider-caption-1" data-x="center" data-y="240" data-speed="700" data-start="1500" data-easing="easeOutBack">
+                        @item.Title
+                    </div>
+
+                    <div class="tp-caption sfb fadeout slider-caption slider-caption-sub-1" data-x="center" data-y="280" data-speed="700" data-easing="easeOutBack" data-start="2000">@item.Description</div>
+
+                    <a asp-action="Index" asp-controller="Home" class="tp-caption sfb fadeout awe-btn awe-btn-12 awe-btn-slider" data-x="center" data-y="380" data-easing="easeOutBack" data-speed="700" data-start="2200">@item.RedirectText</a>
+                </li>
+
+            }
+
+        </ul>
+    </div>
+
+</section>
+<!-- END / BANNER SLIDER -->
+<!-- ACCOMD ODATIONS -->
+<section class="section-accomd awe-parallax bg-14">
+    <div class="container">
+        <div class="accomd-modations">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accomd-modations-header">
+                        <h2 class="heading">ROOMS & RATES</h2>
+                        <img src="~/images/icon-accmod.png" alt="icon">
+                        <p>Semper ac dolor vitae accumsan. Cras interdum hendrerit lacinia. Phasellus accumsan urna vitae molestie interdum. Nam sed placerat libero, non eleifend dolor.</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="accomd-modations-content owl-single">
+
+                        <div class="row" id="roomList">
+                            <input id="roomCount" type="hidden" value="@ViewBag.ProductCount" />
+                            @foreach (var item in Model.Rooms)  
+                            {
+                       
+                                    <!-- ITEM -->
+                                    <div class="col-xs-4">
+                                        <div class="accomd-modations-room">
+                                            <div class="img">
+                                                <a asp-action="RoomDetail" asp-route-id="@item.Id" asp-controller="Room"><img src="~/uploads/rooms/@item.RoomImages.Where(x=> x.IsPoster == true).FirstOrDefault()?.ImageUrl" alt=""></a>
+                                            </div>
+                                            <div class="text">
+                                                <h2><a asp-action="RoomDetail" asp-route-id="@item.Id" asp-controller="Room">@item.Title Room</a></h2>
+
+                                                @if (item.DiscountPercent != null)
+                                                {
+                                                    <p class="price">
+                                                        <span class="price"> <span class="amout"> <small><del>$@item.Price</del></small> $@(item.Price - item.Price * item.DiscountPercent / 100) </span> /days</span>
+                                                    </p>
+
+                                                }
+                                                else
+                                                {
+                                                    <p class="price">
+                                                        <span class="price"> <span class="amout">$@item.Price </span> /days</span>
+                                                    </p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                <!-- END / ITEM -->
+                                
+
+                        }
+
+
+                        </div>
+
+
+                   
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="loadmorediv">  
+            <button id="LoadMoreBtn" style="background-origin" class="loadmorebutton tp-caption sfb fadeout awe-btn awe-btn-12 awe-btn-slider" data-x="center" data-y="380" data-easing="easeOutBack" data-speed="700" data-start="2200">Load More</button>
+    </div>
+</section>
+<!-- END / ACCOMD ODATIONS -->
+<!-- ABOUT -->
+<section class="section-home-about bg-white">
+    <div class="container">
+        <div class="home-about">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="img">
+                        <a asp-action="Index" asp-controller="About"><img src="~/images/home/about/img-1.jpg" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text">
+                        <h2 class="heading">ABOUT US</h2>
+                        <span class="box-border"></span>
+                        <p>@settings.FirstOrDefault(x => x.Key == "AboutLittle").Value</p>
+                        <a asp-action="Index" asp-controller="About" class="awe-btn awe-btn-default">READ MORE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- END / ABOUT -->
+<!-- OUR BEST -->
+<section class="section-our-best bg-white">
+    <div class="container">
+
+        <div class="our-best">
+            <div class="row">
+
+                <div class="col-md-6 col-md-push-6">
+                    <div class="img">
+                        <img src="~/images/home/ourbest/img-1.jpg" alt="">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-md-pull-6 ">
+                    <div class="text">
+                        <h2 class="heading">Our Best</h2>
+                        <p>@settings.FirstOrDefault(x => x.Key == "OurBest").Value</p>
+                        <ul>
+                            @foreach (var item in Model.Features)
+                            {
+                                <li>@Html.Raw(item.Icon) @item.Description</li> 
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- END / OUR BEST -->
+<!-- HOME GUEST BOOK -->
+<div class="section-home-guestbook awe-parallax bg-13">
+    <div class="container">
+        <div class="home-guestbook">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="guestbook-content owl-single">
+                        <!-- ITEM -->
+                        @foreach (var item in Model.GuestReviews)
+                        {
+
+                            <div class="guestbook-item">
+                                <div class="img">
+                                    <img src="~/uploads/guestReviews/@item.ImageUrl" alt="">
+                                </div>
+
+                                <div class="text">
+                                    <p>@item.Description</p>
+                                    <span><strong>@item.FullName</strong></span><br>
+                                    <span>From @item.Address</span>
+                                </div>
+                            </div>
+                        }
+                        <!-- ITEM -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<!-- END / HOME GUEST BOOK -->
+
+                                    @section addcss {
+                                        <style>
+                                            .loadmorediv {
+                                                display:flex;
+                                                justify-content:center;
+                                                align-items:center;
+                                                margin-bottom:20px;
+                                              
+                                            }
+
+        .loadmorediv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+                                            .loadmorebutton {
+            background-color: #e1bd85;
+            ;
+                                            }
+                                        </style>
+                                    } 

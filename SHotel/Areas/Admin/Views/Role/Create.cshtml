@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IdentityRole
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="post" asp-controller="Role" asp-action="Create">
+                <div class="mb-3">
+                    <label for="exampleInputEmail5" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" id="exampleInputEmail5">
+                    <span asp-validation-for="Name" class="text-danger"></span> 
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>

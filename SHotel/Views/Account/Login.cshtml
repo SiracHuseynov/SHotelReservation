@@ -1,0 +1,64 @@
+﻿@model MemberLoginVm  
+
+<!-- ACCOUNT -->
+<section class="section-account parallax bg-11">
+    <div class="awe-overlay"></div>
+    <div class="container">
+        <div class="login-register">
+            <div class="text text-center">
+                <h2>LOGIN ACCOUNT</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing</p>
+                <form method="post" asp-action="Login" asp-controller="Account" class="account_form">
+                    <div asp-validation-summary="ModelOnly" style="color:white;"></div>  
+                    <p>
+                        @Html.ValidationMessage("Verify")
+                    </p>
+                    <div class="field-form">
+                        <input asp-for="UsernameOrEmail" class="field-text" placeholder="Username or email"> 
+                        <span asp-validation-for="UsernameOrEmail" style="color:white;"></span>
+
+                    </div>
+                    <div class="field-form">
+                        <input asp-for="Password" class="field-text" placeholder="Password" id="password">
+                        <span asp-validation-for="Password" style="color:white;"></span>
+                        <span class="view-pass" id="togglePassword"><i class="lotus-icon-view"></i></span>
+                    </div>
+                    <div class="field-form">
+                        <div class="custom-control custom-checkbox small">
+                            <input asp-for="RememberMe" class="custom-control-input" id="customCheck">
+                            <label class="custom-control-label" for="customCheck">
+                                Remember
+                                Me
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="field-form field-submit">
+                        <button type="submit" class="awe-btn awe-btn-13">Login</button>
+                    </div>
+                    <span class="account-desc"><a asp-action="Register" asp-controller="Account">I don’t have an account  - Create </a></span>
+                    <span class="account-desc"><a asp-action="ForgetPassword" asp-controller="Account">Forgot Password</a></span>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- END / ACCOUNT -->
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // Toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
