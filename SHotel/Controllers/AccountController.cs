@@ -191,7 +191,7 @@ namespace SHotel.Controllers
                 await _roleManager.CreateAsync(new IdentityRole { Name = role.ToString()});
             }
 
-            return Content("Roles created!");
+            return Content("Roles created!"); 
         }
 
         public IActionResult ForgetPassword()

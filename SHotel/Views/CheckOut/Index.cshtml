@@ -102,7 +102,7 @@
                                     <textarea class="field-textarea" asp-for="Note" placeholder="Notes about your order, eg. special notes for delivery"></textarea>
                                 </div>
 
-                                <div style="margin-left: 700px;margin-top:330px;">
+                                <div style="margin-left:10px;margin-top:600px;">
                                     <script src="//checkout.stripe.com/v2/checkout.js"
                                             class="stripe-button"
                                             data-key="@Stripe.Value.Publishablekey"
@@ -136,10 +136,10 @@
                                 {
                                     <div class="cart-item">
                                         <div class="img">
-                                            <a href="#"><img src="~/uploads/rooms/@item.Room.RoomImages.Where(x => x.IsPoster == true).FirstOrDefault()?.ImageUrl" alt=""></a>
+                                            <a><img src="~/uploads/rooms/@item.Room.RoomImages.Where(x => x.IsPoster == true).FirstOrDefault()?.ImageUrl" alt=""></a>
                                         </div>
-                                        <div class="text">
-                                            <a href="#">@item.Room.Title Room</a>
+                                        <div class="text"> 
+                                            <a>@item.Room.Title Room</a> 
 
                                             @if (item.Room.DiscountPercent != null)
                                             {

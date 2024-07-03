@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using SHotel.Business.DTOs.ReservationDTOs;
 using SHotel.Business.DTOs.RoomDTOs;
+using SHotel.Business.Exceptions;
 using SHotel.Business.Extensions;
 using SHotel.Business.Services.Abstracts;
 using SHotel.Business.Services.Concretes;
@@ -79,6 +80,10 @@ namespace SHotel.Controllers
             //var datas = _roomService.GetAllRooms(x => x.IsDeleted == false);
 
             List<Room> roomGetDtos = _mapper.Map<List<Room>>(rooms);
+
+            //if (roomGetDtos.Count == 0)
+            //    throw new Exception("Tapilmadi!");
+
 
             if (page <= 0 || page > (double)Math.Ceiling((double)roomGetDtos.Count / 2))
             {
